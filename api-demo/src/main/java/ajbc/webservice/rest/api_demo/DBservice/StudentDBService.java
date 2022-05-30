@@ -29,6 +29,8 @@ public class StudentDBService {
 	
 	//add student to DB
 	public Student addStudent(Student student) {
+		if(students.containsKey(student.getID()))
+			return null;
 		students.put(student.getID(), student);
 		return student;
 	}
@@ -55,9 +57,15 @@ public class StudentDBService {
 		return students.remove(id);
 	}
 	
+	//get list of students with average >= {average}
 	
-	
-	
+	public List<Student> getStudentsByAverage(double average){
+		return students.values().stream().filter(s->s.getAverage()>=average).toList();
+	}
+
+	public List<Student> getStudentsByAverage(double minAverage, double maxAverage) {
+		return students.values().stream().filter(s->s.getAverage()>=minAverage && s.getAverage()<=maxAverage).toList();
+	}
 	
 	
 	
