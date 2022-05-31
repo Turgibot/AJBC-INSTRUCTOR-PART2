@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import ajbc.webservice.rest.api_demo.DB.MyDB;
+import ajbc.webservice.rest.api_demo.exception.MissingDataException;
 import ajbc.webservice.rest.api_demo.models.Student;
 
 public class StudentDBService {
@@ -23,8 +24,11 @@ public class StudentDBService {
 		return new ArrayList<Student>(students.values());
 	}
 	
-	public Student getStudentById(long id) {
-		return students.get(id);
+	public Student getStudentById(long id) throws MissingDataException{
+		Student student = students.get(id);
+		if(student == null)
+			throw new MissingDataException("id "+id+" is not a valid student ID");
+		return student;
 	}
 	
 	//add student to DB
