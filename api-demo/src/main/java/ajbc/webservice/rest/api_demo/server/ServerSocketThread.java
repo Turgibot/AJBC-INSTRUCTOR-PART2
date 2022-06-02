@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.google.gson.Gson;
+
 import ajbc.webservice.rest.api_demo.DBservice.StudentDBService;
 import ajbc.webservice.rest.api_demo.models.Student;
 
@@ -30,9 +32,11 @@ public class ServerSocketThread implements Runnable {
 			// reading data
 			String line = bufferReader.readLine();
 			System.out.println("Thing says: " + line);
+			Gson gson = new Gson();
+			Student student = gson.fromJson(line, Student.class);
+			StudentDBService dbService = new StudentDBService();
+			dbService.addStudent(student);
 			
-			// sending data
-			writer.println("processing result done ");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 

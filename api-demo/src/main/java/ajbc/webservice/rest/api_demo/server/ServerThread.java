@@ -1,17 +1,11 @@
 package ajbc.webservice.rest.api_demo.server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import ajbc.webservice.rest.api_demo.DBservice.StudentDBService;
-import ajbc.webservice.rest.api_demo.models.Student;
 
 public class ServerThread extends Thread {
 
@@ -28,7 +22,7 @@ public class ServerThread extends Thread {
 
 		try (ServerSocket serverSocket = new ServerSocket(PORT);) {
 
-			System.out.println("Game Server started on port " + PORT);
+			System.out.println("Student Server started on port " + PORT);
 
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
@@ -41,8 +35,9 @@ public class ServerThread extends Thread {
 	}
 
 	public void kill() {
-		executorService.shutdown();
+
 		try {
+			executorService.shutdown();
 			executorService.awaitTermination(2, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
