@@ -8,7 +8,7 @@ import jakarta.servlet.annotation.WebListener;
 public class MultiThreadedServerRunner implements ServletContextListener {
 
 	private final int PORT = 9090;
-	ServerThread server;
+	private ServerThread server;
 	
 	public void contextInitialized(ServletContextEvent event) {
 		 server = new ServerThread(PORT);

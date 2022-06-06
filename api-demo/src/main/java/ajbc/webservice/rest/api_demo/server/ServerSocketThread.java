@@ -7,16 +7,17 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import ajbc.webservice.rest.api_demo.DB.MyDB;
 import ajbc.webservice.rest.api_demo.DBservice.StudentDBService;
 import ajbc.webservice.rest.api_demo.models.Student;
 
 public class ServerSocketThread implements Runnable {
 
 	private Socket clientSocket;
-	private boolean stopped;
-
+	private StudentDBService studentDB;
 	public ServerSocketThread(Socket clientSocket) {
 		this.clientSocket = clientSocket;
+		studentDB = new StudentDBService();
 	}
 
 	@Override
@@ -25,21 +26,18 @@ public class ServerSocketThread implements Runnable {
 		try (BufferedReader bufferReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);) {
 							
-			System.out.println(
-					"Thing is connected " + clientSocket.getInetAddress() + " port " + clientSocket.getPort());
-			// reading data
+			Student student = new Student();
+			studentDB.addStudent(student);
+			System.out.println("added student with id %d".formatted(student.getID()));
 			String line = bufferReader.readLine();
-			System.out.println("Thing says: " + line);
+//			System.out.println("Thing says: " + line);
 			
 			// sending data
-			writer.println("processing result done ");
+			writer.println("added student with id %d".formatted(student.getID()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
 
 	}
 
-	public void kill() {
-		stopped = true;
-	}
 }
