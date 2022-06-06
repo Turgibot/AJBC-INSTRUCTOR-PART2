@@ -22,7 +22,7 @@ public class ServerThread extends Thread {
 
 		try (ServerSocket serverSocket = new ServerSocket(PORT);) {
 
-			System.out.println("Game Server started on port " + PORT);
+			System.out.println("Student Server started on port " + PORT);
 
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
@@ -35,8 +35,9 @@ public class ServerThread extends Thread {
 	}
 
 	public void kill() {
-		executorService.shutdown();
+
 		try {
+			executorService.shutdown();
 			executorService.awaitTermination(2, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

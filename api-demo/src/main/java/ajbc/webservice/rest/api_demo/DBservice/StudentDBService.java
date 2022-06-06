@@ -33,8 +33,8 @@ public class StudentDBService {
 	
 	//add student to DB
 	public Student addStudent(Student student) {
-		if(students.containsKey(student.getID()))
-			return null;
+//		if(students.containsKey(student.getID()))
+//			return null;
 		students.put(student.getID(), student);
 		return student;
 	}
