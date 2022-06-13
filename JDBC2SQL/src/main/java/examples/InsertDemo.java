@@ -18,10 +18,13 @@ public class InsertDemo {
 		Connection connection = null;
 		Statement statement = null;
 		try {
+			//1 create a connection
 			connection = DriverManager.getConnection(connectStr.getUrl(), "TURGIBOT", "1234");
 			System.out.println("Connected to SQL Server " + connection.isValid(2));
+			//2 create a statement
 			statement = connection.createStatement();
-			String query = "Insert Into Employees\r\n" + "(lastName, firstName, email, department, salary)"
+			//3 create query string 
+			String query = "Insert Into Employees (lastName, firstName, email, department, salary)"
 					+ "values('Tordjman','Guy', 'turgibot@gmail.com', 'Academy', 100000)";
 
 			int rowsAffected = statement.executeUpdate(query);
