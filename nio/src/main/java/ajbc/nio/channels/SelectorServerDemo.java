@@ -36,6 +36,7 @@ public class SelectorServerDemo {
 				
 				if(key.isAcceptable()) {
 					registerServer(selector, serverChannel);
+					System.out.println("client connected");
 				}
 				else
 					if(key.isReadable()) {
@@ -51,10 +52,12 @@ public class SelectorServerDemo {
 		SocketChannel client = (SocketChannel) key.channel();
 		
 		client.read(buffer);
+		System.out.println("Data read");
 		process();
 		buffer.flip();
 		client.write(buffer);
 		buffer.clear();
+		System.out.println("Data sent");
 	}
 
 	private static void registerServer(Selector selector, ServerSocketChannel serverChannel) throws IOException {
