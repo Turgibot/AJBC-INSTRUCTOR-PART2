@@ -40,33 +40,14 @@ public class Client {
 
 				SelectionKey key = iter.next();
 
-				if (key.isWritable()) {
-
-					send(buffer, key);
-				}
-
-				else if (key.isReadable()) {
+				if (key.isReadable()) {
 					read(buffer, key);
 				}
 
 				iter.remove();
 			}
 		}
-		
-	}
 
-	private synchronized static void send(ByteBuffer buffer, SelectionKey key) throws IOException {
-
-		SocketChannel client = (SocketChannel) key.channel();
-		String txt = (String) key.attachment();
-		if(txt==null)
-			return;
-		buffer.clear();
-		buffer.put(txt.getBytes());
-		buffer.flip();
-		client.write(buffer);
-		buffer.clear();
-		client.register(key.selector(), SelectionKey.OP_READ);
 	}
 
 	private static void read(ByteBuffer buffer, SelectionKey key) throws IOException {
@@ -91,19 +72,23 @@ public class Client {
 		Selector selector;
 		Scanner sc;
 		ByteBuffer buffer;
+
 		public NonBlockWrite(SocketChannel clientChannel, Selector selector) {
 			this.clientChannel = clientChannel;
 			this.selector = selector;
 			sc = new Scanner(System.in);
-			buffer = ByteBuffer.allocate(BUFFER_SIZE); 
+			buffer = ByteBuffer.allocate(BUFFER_SIZE);
 		}
 
 		@Override
 		public void run() {
-			System.out.println("write msg to send to chat:");
+			System.out.println("Hi, What is your name?");
+			String name = sc.nextLine();
+			System.out.println("Hi, %s- You can now start chatting:".formatted(name));
+			name += ": ";
 			while (true) {
 				try {
-					String txt = sc.nextLine();
+					String txt = name + sc.nextLine();
 					if (txt.equals(STOP)) {
 						break;
 					}
@@ -112,7 +97,7 @@ public class Client {
 					buffer.flip();
 					clientChannel.write(buffer);
 					buffer.clear();
-					System.out.println("-----------------You Said------------------");
+					System.out.println("-----------------You Sent------------------");
 					System.out.println(txt);
 					System.out.println("-------------------------------------------");
 				} catch (ClosedChannelException e) {
