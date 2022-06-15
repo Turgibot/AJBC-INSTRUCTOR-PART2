@@ -1,5 +1,7 @@
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import ajbc.jdbc.db.services.EmployeeDbService;
 import ajbc.jdbc.exercises.ConnectionManager;
@@ -23,8 +25,17 @@ public class Runner {
 //			add3Emps(connection);
 //			getAndPrintEmp(connection, 1012);
 //			update3Emps(connection);
-			delete2Emps(connection);
-			
+//			delete2Emps(connection);
+			Employee emp1 = new Employee("SSSshai", "Hasbshsush", "gsssd@q2ssssss2asdsdbc.com", "Food", 22330);
+			Employee emp2 = new Employee("HHHaim", "Basnai", "jaissss@q2sssdssssc.com", "Culture", 22330);
+			Employee emp3 = new Employee("SSShir", "Sismon", "sissnq@qdsssssss2bc.com", "Health", 99999);
+			List<Employee> emps = new ArrayList<>();
+			emps.add(emp1);
+			emps.add(emp2);
+			emps.add(emp3);
+			EmployeeDbService dbService = new EmployeeDbService();
+			emps = dbService.addEmployees(connection, emps);
+			System.out.println(emps);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
