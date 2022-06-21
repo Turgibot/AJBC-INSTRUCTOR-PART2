@@ -2,20 +2,19 @@ package ajbc.learn.mongodb.models;
 
 import java.util.List;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Student {
-	@SerializedName("_id")
+	
 	private ObjectId id;
-	@SerializedName("student_id")
+	@BsonProperty(value = "student_id")
 	private int studentId;
-	@SerializedName("first_name")
+	@BsonProperty(value = "first_name")
 	private String firstName;
-	@SerializedName("class_id")
+	@BsonProperty(value = "class_id")
 	private int classId;
-	@SerializedName("last_name")
+	@BsonProperty(value = "last_name")
 	private String lastName;
 	private List<Exam> exams;
 	
