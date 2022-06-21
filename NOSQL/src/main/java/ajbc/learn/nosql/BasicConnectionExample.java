@@ -22,7 +22,7 @@ public class BasicConnectionExample {
 		root.setLevel(Level.ERROR);
 
 		
-		MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(new ConnectionString(MyConnectionString.uri()))
+		MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(MyConnectionString.uri())
 				.serverApi(ServerApi.builder().version(ServerApiVersion.V1).build()).build();
 
 		try (MongoClient mongoClient = MongoClients.create(settings)) {

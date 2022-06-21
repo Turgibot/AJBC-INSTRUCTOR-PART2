@@ -1,4 +1,4 @@
-package ajbc.learn.mongodb.crud;
+package ajbc.learn.mongodb.examples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class Delete {
 		root.setLevel(Level.ERROR);
 
 		MongoClientSettings settings = MongoClientSettings.builder()
-				.applyConnectionString(new ConnectionString(MyConnectionString.uri()))
+				.applyConnectionString(MyConnectionString.uri())
 				.serverApi(ServerApi.builder().version(ServerApiVersion.V1).build()).build();
 		JsonWriterSettings prettyPrint = JsonWriterSettings.builder().indent(true).build();
 		try (MongoClient mongoClient = MongoClients.create(settings)) {

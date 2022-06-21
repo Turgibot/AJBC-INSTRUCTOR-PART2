@@ -1,4 +1,4 @@
-package ajbc.learn.mongodb.crud;
+package ajbc.learn.mongodb.examples;
 
 import java.util.List;
 import java.util.Map;
@@ -44,7 +44,7 @@ public class Create {
 		root.setLevel(Level.ERROR);
 
 		MongoClientSettings settings = MongoClientSettings.builder()
-				.applyConnectionString(new ConnectionString(MyConnectionString.uri()))
+				.applyConnectionString(MyConnectionString.uri())
 				.serverApi(ServerApi.builder().version(ServerApiVersion.V1).build()).build();
 
 		try (MongoClient mongoClient = MongoClients.create(settings)) {

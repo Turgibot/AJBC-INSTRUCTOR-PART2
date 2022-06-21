@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.mongodb.ConnectionString;
+
 public class MyConnectionString {
 	private static final String PROPERTIES_FILE = "nosql.properties";
 
-	public static String uri() {
+	public static ConnectionString uri() {
 		FileInputStream fileInputStream = null;
 
 		try {
@@ -23,8 +25,8 @@ public class MyConnectionString {
 			String param2 = props.getProperty("param2");
 			String serverName = props.getProperty("server_name");
 			
-			return 	"mongodb+srv://"+user+":"+password+"@"+cluster+"."+serverName+"/?"+param1+"&"+param2;
-					
+			String uri = 	"mongodb+srv://"+user+":"+password+"@"+cluster+"."+serverName+"/?"+param1+"&"+param2;
+			return new ConnectionString(uri);
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

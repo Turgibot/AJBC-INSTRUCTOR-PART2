@@ -1,4 +1,4 @@
-package ajbc.learn.mongodb.crud;
+package ajbc.learn.mongodb.examples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,39 +46,49 @@ public class Update {
 		root.setLevel(Level.ERROR);
 
 		MongoClientSettings settings = MongoClientSettings.builder()
-				.applyConnectionString(new ConnectionString(MyConnectionString.uri()))
+				.applyConnectionString(MyConnectionString.uri())
 				.serverApi(ServerApi.builder().version(ServerApiVersion.V1).build()).build();
+		
 		JsonWriterSettings prettyPrint = JsonWriterSettings.builder().indent(true).build();
+		
 		try (MongoClient mongoClient = MongoClients.create(settings)) {
 
 			MongoDatabase myDB = mongoClient.getDatabase("my_own_db");
 			MongoCollection<Document> myCollection = myDB.getCollection("myCollection");
 
-			// update one document
+			
+			
+			
+//			// update one document
             Bson filter = eq("student_id", STUDENT_ID_MAX);
             Bson updateOperation = set("comment", "You should learn MongoDB!");
-            UpdateResult updateResult = myCollection.updateOne(filter, updateOperation);
-            System.out.println("=> Updating the doc with {\"student_id\":10000}. Adding comment.");
-            System.out.println(myCollection.find(filter).first().toJson(prettyPrint));
-            System.out.println(updateResult);
-			
-			
-            // upsert
+//            UpdateResult updateResult = myCollection.updateOne(filter, updateOperation);
+//            System.out.println("=> Updating the doc with {\"student_id\":10000}. Adding comment.");
+//            System.out.println(myCollection.find(filter).first().toJson(prettyPrint));
+//            System.out.println(updateResult);
+//			
+            
+//            
+//            
+//            
+//            
+//			
+//            // upsert
             filter = and(eq("student_id", STUDENT_ID_MAX+99999), eq("class_id", CLASS_ID_MAX+9));
             updateOperation = push("comments", "You will learn a lot if you read the MongoDB blog!");
             UpdateOptions options = new UpdateOptions().upsert(true);
-            updateResult = myCollection.updateOne(filter, updateOperation, options);
+            UpdateResult updateResult = myCollection.updateOne(filter, updateOperation, options);
             System.out.println("\n=> Upsert document with {\"student_id\":10002.0, \"class_id\": 10.0} because it doesn't exist yet.");
             System.out.println(updateResult);
             System.out.println(myCollection.find(filter).first().toJson(prettyPrint));
-            
-         // update many documents
+//            
+//         // update many documents
             filter = eq("student_id", 10000);
             updateResult = myCollection.updateMany(filter, updateOperation);
             System.out.println("\n=> Updating all the documents with {\"student_id\":10001}.");
             System.out.println(updateResult);
-
-            // findOneAndUpdate
+//
+//            // findOneAndUpdate
             filter = eq("student_id", 10000);
             Bson update1 = inc("x", 10); // increment x by 10. As x doesn't exist yet, x=10.
             Bson update2 = rename("class_id", "new_class_id"); // rename variable "class_id" in "new_class_id".
