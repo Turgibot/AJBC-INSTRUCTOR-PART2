@@ -27,17 +27,22 @@ public class Runner3 {
 			
 			ProductDao dao = ctx.getBean("htDao", ProductDao.class);
 			
+			System.out.println("Dao is instace of "+dao.getClass().getName());
+			
+			System.out.println("count is "+dao.count());
+			
+			
+			
 			List<Product> products = dao.getAllProducts();
 			System.out.println(products.size());
 			
 			Double min = 50.0;
 			Double max = 200.0;
 			products = dao.getProductsByPriceRange(min, max);
-//			products.forEach(System.out::println);
+			System.out.println(products.size());
 			
 			
 			products = dao.getProductsByPriceRange(max, min);
-//			products.forEach(System.out::println);
 			System.out.println(products.size());
 			
 			Product product = dao.getProduct(1);
@@ -45,13 +50,13 @@ public class Runner3 {
 			
 			product.setUnitPrice(product.getUnitPrice()+1);
 			
-//			try{
-//				
-//				dao.updateProduct(product);
-//			}
-//			catch(DaoException e ){
-//				System.out.println(e);
-//			}
+			try{
+				
+				dao.updateProduct(product);
+			}
+			catch(DaoException e ){
+				System.out.println(e);
+			}
 			
 			System.out.println("Continute till end of main...");
 		}
