@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import ajbc.learn.config.AppConfig;
-import ajbc.learn.dao.DaoException;
 import ajbc.learn.dao.JdbcProductDao;
 import ajbc.learn.dao.MongoProductDao;
 import ajbc.learn.dao.ProductDao;
@@ -21,17 +20,43 @@ import ch.qos.logback.classic.Logger;
 
 public class Runner2 {
 
-	public static void main(String[] args) throws DaoException {
+	public static void main(String[] args) {
 		Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 		root.setLevel(Level.ERROR);
 
-		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);) {
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
-			JdbcProductDao dao = ctx.getBean("jdbcDao", JdbcProductDao.class);
+		JdbcTemplate template = ctx.getBean(JdbcTemplate.class);
 
-			System.out.println(dao.getDiscontinuedProducts().size());
+		RowMapper<Category> rowMapper = (rs, rowNum) -> {
+			Category cat = new Category();
+			cat.setCategoryId(rs.getInt(1));
+			cat.setCategoryName(rs.getString("categoryName"));
+			cat.setDescription(rs.getString("description"));
+			cat.setPicture(rs.getBytes("picture"));
+			return cat;
 
-		}
+		};
+
+		// CRUD
+		// insertNewShipper(template);
+		// updateShipperPhone(template, 5, "(012) 345-6789");
+
+		// query that return a single value
+
+		// printNumProducts(template);
+		// printShipperName(template, 5);
+		// printCityOfCustomerById(template, "FISSA");
+
+		// printProductDetails(template, 3);
+
+		// printAnyOrderofEmployeeById(template, 54);
+
+		// printAllShippers(template);
+		// printAllShipperNames(template);
+
+//		printCategoryById(template, rowMapper, 5);
+//		printAllCategories(template, rowMapper);
 	}
 
 	private static void printAllCategories(JdbcTemplate template, RowMapper<Category> rowMapper) {
