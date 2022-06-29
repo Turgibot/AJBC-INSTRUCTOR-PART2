@@ -1,5 +1,6 @@
 package ajbc.learn.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +30,7 @@ public class Product {
 	private Integer productId;
 	private String productName;
 	
+	@JsonIgnore
 	@Column(insertable = false, updatable = false)
 	private Integer supplierId;
 	
@@ -35,7 +39,7 @@ public class Product {
 	@JoinColumn(name="supplierId")
 	private Supplier supplier;
 	
-	
+	@JsonIgnore
 	@Column(insertable = false, updatable = false)
 	private Integer categoryId;
 	

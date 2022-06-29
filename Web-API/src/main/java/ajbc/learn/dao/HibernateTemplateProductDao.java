@@ -33,7 +33,10 @@ public class HibernateTemplateProductDao implements ProductDao {
 
 	@Override
 	public Product getProduct(Integer productId) throws DaoException {
-		return template.get(Product.class, productId);
+		Product prod = template.get(Product.class, productId);
+		if (prod ==null)
+			throw new DaoException("No Such Product in DB");
+		return prod;
 	}
 
 	@Override
