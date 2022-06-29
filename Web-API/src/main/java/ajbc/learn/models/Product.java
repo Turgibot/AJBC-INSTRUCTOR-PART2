@@ -35,7 +35,7 @@ public class Product {
 	private Integer supplierId;
 	
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name="supplierId")
 	private Supplier supplier;
 	
@@ -43,7 +43,7 @@ public class Product {
 	@Column(insertable = false, updatable = false)
 	private Integer categoryId;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name="categoryId")
 	private Category category;
 	
